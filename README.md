@@ -1,5 +1,7 @@
 <p align="center">
-  <img src="assets/icon.jpg" alt="Product Logo" width="200">
+  <a href="https://github.com/jie0102/My_Focus/releases">
+    <img src="assets/icon.jpg" alt="Product Logo" width="200">
+  </a>
 </p>
 
 <p align="center">
