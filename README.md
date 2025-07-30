@@ -4,7 +4,9 @@
   </a>
 </p>
 
-<p align="center"><b>My Focus - 专注度监控应用</b></p>
+<p align="center"><b>My Focus - Focus Monitoring Application</b></p>
+
+<p align="center">English | <a href="./docs/README.zh.md">中文</a> | <a href="https://github.com/jie0102/My_Focus/issues">Feedback</a><br></p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/status-developing-yellow.svg">
@@ -14,10 +16,10 @@
 
 ---
 
-## 🧐 项目介绍
+## 🧐 Project Introduction
 
-**My Focus** 是一款基于 Tauri 框架开发的桌面专注度监控应用，旨在帮助用户提升专注力与工作效率。
-应用通过智能监控系统与 AI 分析，实时评估用户专注状态，并提供个性化的提升建议。
+**My Focus** is a desktop focus monitoring application built on the Tauri framework, designed to help users improve their concentration and work efficiency.
+The app leverages an intelligent monitoring system and AI analysis to assess your focus in real time and provide personalized improvement suggestions.
 
 <p align="center">
   <img src="assets/screenshot1.png" width="45%">
@@ -28,129 +30,129 @@
 
 ---
 
-## ✨ 功能特色
+## ✨ Features
 
-### 已完成核心功能
+### Core Features (Completed)
 
-- **智能监控系统**
-  - 实时屏幕监控：定期截取屏幕快照，进行 AI 分析
-  - 应用程序跟踪：监控活跃应用并分类
-  - 专注状态评估：通过 AI 判断用户专注程度（专注/分心/严重分心）
-  - 智能干预提醒：分心时自动提醒
+- **Intelligent Monitoring System**
+  - Real-time screen monitoring: Periodically captures screen snapshots for AI analysis
+  - Application tracking: Tracks active applications and categorizes them
+  - Focus state assessment: Uses AI to determine whether you are focused, distracted, or seriously distracted
+  - Smart distraction reminders: Automatically reminds you when distraction is detected
 
-- **灵活配置**
-  - 多 AI 平台支持：OpenAI API、Ollama、Claude 等
-  - 个性化设置：自定义监控间隔、干预方案、应用白名单/黑名单
-  - 数据完全本地化，隐私有保障
+- **Flexible Configuration**
+  - Multi-AI platform support: OpenAI API, Ollama, Claude, etc.
+  - Personalization: Customize monitoring interval, intervention strategies, app whitelist/blacklist
+  - Completely local data storage, privacy protection
 
-- **数据分析与报告**
-  - 专注度统计与趋势分析
-  - 历史数据可视化
-  - 集成任务追踪
+- **Analysis & Reports**
+  - Focus statistics and trend analysis
+  - Historical data visualization
+  - Integrated task tracking
 
-### 开发中及未来规划
+### In Development & Future Plans
 
-- AI 个性化专注建议
-- 更多数据可视化
-- 个性化专注学习算法
-- 团队协作功能
-- 多模态：如人脸表情识别等
-- 移动端与设备同步
-- 插件系统
-- 新 AI 平台与本地模型支持
-
----
-
-## 🔒 隐私保护
-
-> 本项目高度重视用户隐私，所有数据与配置完全本地化，无任何云端上传或追踪。
-> AI 服务调用仅在用户授权时发生，所有操作透明可控。
+- AI-powered personalized focus suggestions
+- More data visualization features
+- Personalized focus learning algorithms
+- Team collaboration functions
+- Multi-modal judgment: facial expression recognition, etc.
+- Mobile and cross-device sync
+- Plugin system
+- New AI platforms and local model support
 
 ---
 
-## 🤖 强烈推荐 Ollama 本地 AI 服务
+## 🔒 Privacy Protection
 
-**充分保护隐私，享受本地 AI 动力**
-推荐下载并使用 [Ollama](https://ollama.ai) 在本地运行 推荐模型（如 qwen3）进行分析 —— 数据绝不出本机。
+> This project values user privacy to the highest degree—all data and configurations are stored locally, with **no cloud upload or tracking**.
+> AI services are only triggered when explicitly authorized by you, with all operations being transparent and controllable.
 
-- 💡 离线运行，零成本，无需网络
-- 🚀 性能优异，响应快速
-- 🔐 数据安全，隐私无忧
+---
+
+## 🤖 Highly Recommended: Local AI Service with Ollama
+
+**Fully protect your privacy and enjoy local AI support.**
+We recommend [Ollama](https://ollama.ai) to run models (such as qwen3) locally for analysis — all your data stays on your device.
+
+- 💡 Runs offline, no network or cloud needed
+- 🚀 Excellent performance, fast responses
+- 🔐 Data security & privacy guaranteed
 
 ```bash
-# Ollama 拉取模型
-ollama pull <模型名称>
+# Pull a model with Ollama
+ollama pull <model_name>
 ```
 
 ---
 
-## 🚀 快速开始
+## 🚀 Getting Started
 
 <details>
-  <summary><b>系统要求</b>（点击展开）</summary>
+  <summary><b>System Requirements</b> (click to expand)</summary>
 
-  - Windows 10/11（主要适配）
-  - 4GB+ RAM（推荐 8GB+）
+  - Windows 10/11 (main support)
+  - 4GB+ RAM (8GB+ recommended)
   - Node.js 18+
-  - Rust 环境（如需构建）
+  - Rust toolchain (for building)
 </details>
 
-1. **下载**：前往 [Releases](../../releases) 页面获取最新版本
-2. **安装 Ollama（可选）**：[ Ollama 官网 ](https://ollama.ai) - 配置本地 AI
-3. **初次配置**：在应用设置页面选择/配置 AI 服务
-4. **开始专注**：启动监控功能，享受专注提升历程！
+1. **Download**: Visit the [Releases](../../releases) page for the latest version.
+2. **Install Ollama (Optional):** [Ollama Official Website](https://ollama.ai) — set up a local AI model.
+3. **First-time setup:** Choose and configure your AI service in the app's settings page.
+4. **Start Focusing:** Launch monitoring and enjoy your focus improvement journey!
 
-#### 开发构建
+#### For Developers
 
 ```bash
 git clone <repository-url>
 cd MyFocus
 npm install
-npm run tauri:dev   # 开发模式
-npm run tauri:build # 构建发布
+npm run tauri:dev   # Development mode
+npm run tauri:build # Build for production
 ```
 
 ---
 
-## 🏗️ 技术架构
+## 🏗️ Technology Stack
 
-| 层级      | 技术栈                       |
-| --------- | --------------------------- |
-| 前端      | HTML/CSS/JavaScript + Vite  |
-| 后端      | Rust + Tauri Framework      |
-| AI 集成   | OpenAI、Ollama、Claude      |
-| 数据存储  | 本地 JSON 文件              |
-| OCR 模块  | Tesseract                   |
-| 跨平台    | 基于 Tauri 构建原生应用     |
-
----
-
-## 🤝 参与贡献
-
-欢迎您加入开源共建！
-
-- Issues 反馈 Bug 或建议
-- PR 贡献代码或文档
-- 帮助多语言翻译
-- 讨论新想法
+| Layer         | Tech Stack                      |
+| ------------- | ------------------------------ |
+| Frontend      | HTML/CSS/JavaScript + Vite     |
+| Backend       | Rust + Tauri Framework         |
+| AI Integration| OpenAI, Ollama, Claude         |
+| Data Storage  | Local JSON files               |
+| OCR Module    | Tesseract                      |
+| Cross-Platform| Native app built with Tauri    |
 
 ---
 
-## 📞 联系方式
+## 🤝 Contributing
 
-- **问题反馈**：[GitHub Issues](../../issues)
-- **功能讨论**：[GitHub Discussions](../../discussions)
-- **电子邮件**：609568171@qq.com
+You're welcome to join our open-source building!
+
+- Submit issues for bugs or suggestions
+- PRs for code or documentation
+- Help with localization and translation
+- Discuss new ideas
 
 ---
 
-## 📄 许可证
+## 📞 Contact
 
-本项目采用 **GNU AGPLv3** 许可证 - 详见 [LICENSE](LICENSE)
+- **Issue Reporting**: [GitHub Issues](../../issues)
+- **Feature Discussion**: [GitHub Discussions](../../discussions)
+- **Email**: 609568171@qq.com
+
+---
+
+## 📄 License
+
+This project is licensed under **GNU AGPLv3** - see [LICENSE](LICENSE) for details.
 
 ---
 
 <p align="center">
-  <b>让专注成为习惯，让效率成为本能</b><br>
-  <i>My Focus - 您的专注力管理专家，守护您的每一分专注时光。</i>
+  <b>Make focus a habit, make efficiency a reflex.</b><br>
+  <i>My Focus - Your dedicated focus management expert, guarding every minute of your concentration.</i>
 </p>
