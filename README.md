@@ -81,7 +81,7 @@ My Focus 是一个基于 Tauri 框架开发的桌面专注度监控应用，旨�
 
 ### 安装指南
 
-1. **下载应用**: 从 [Releases](../releases) 页面下载最新版本
+1. **下载应用**: 从 [Releases](../../releases) 页面下载最新版本
 2. **安装 Ollama** (推荐):
    ```bash
    # 访问 https://ollama.ai 下载安装
