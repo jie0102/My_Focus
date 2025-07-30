@@ -6,6 +6,8 @@
 
 <p align="center">
 <b>My Focus - 专注度监控应用</b><br>
+
+  
 <img src="https://img.shields.io/badge/status-developing-yellow.svg">
 <img src="https://img.shields.io/badge/Tauri-1.5-blue.svg">
 <img src="https://img.shields.io/badge/license-AGPLv3-green.svg">
