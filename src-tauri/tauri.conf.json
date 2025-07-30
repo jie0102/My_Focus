@@ -1,0 +1,85 @@
+{
+    "$schema": "../node_modules/@tauri-apps/cli/schema.json",
+    "build": {
+      "beforeBuildCommand": "npm run build",
+      "beforeDevCommand": "npm run dev",
+      "devPath": "http://localhost:1420",
+      "distDir": "../dist"
+    },
+    "package": {
+      "productName": "My Focus",
+      "version": "1.0.0"
+    },
+    "tauri": {
+      "allowlist": {
+        "all": false,
+        "shell": {
+          "all": false,
+          "open": true
+        },
+        "window": {
+          "all": false,
+          "close": true,
+          "hide": true,
+          "show": true,
+          "maximize": true,
+          "minimize": true,
+          "unmaximize": true,
+          "unminimize": true,
+          "startDragging": true
+        },
+        "notification": {
+          "all": true
+        },
+        "fs": {
+          "all": false,
+          "readFile": true,
+          "writeFile": true,
+          "readDir": true,
+          "createDir": true,
+          "removeFile": true,
+          "exists": true,
+          "scope": ["$APPDATA/my-focus/*", "$DOCUMENT/my-focus/*"]
+        },
+        "http": {
+          "all": false,
+          "request": true,
+          "scope": ["https://**"]
+        }
+      },
+      "bundle": {
+        "active": true,
+        "targets": "all",
+        "identifier": "com.yourname.myfocus",
+        "icon": [
+          "icons/icon.ico"
+        ],
+        "category": "Productivity",
+        "shortDescription": "专注度监控应用",
+        "longDescription": "My Focus - 专注度监控应用，帮助您提高工作效率，监控应用使用情况，提供AI驱动的专注分析报告。",
+        "copyright": "Copyright (c) 2024 My Focus Team",
+        "resources": [
+          "../resources/tesseract/**"
+        ]
+      },
+      "security": {
+        "csp": null
+      },
+      "windows": [
+        {
+          "fullscreen": false,
+          "resizable": true,
+          "title": "My Focus - 专注度App",
+          "width": 1200,
+          "height": 800,
+          "minWidth": 800,
+          "minHeight": 600,
+          "center": true,
+          "decorations": true,
+          "alwaysOnTop": false,
+          "skipTaskbar": false
+        }
+      ],
+      "systemTray": null
+    }
+  }

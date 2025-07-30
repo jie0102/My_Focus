@@ -1,0 +1,55 @@
+[package]
+name = "my-focus"
+version = "1.0.0"
+description = "My Focus - 专注度监控应用"
+authors = ["Your Name <your.email@example.com>"]
+license = "MIT"
+repository = "https://github.com/yourusername/my-focus"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[build-dependencies]
+tauri-build = { version = "1.5", features = [] }
+
+[dependencies]
+tauri = { version = "1.5", features = [ "shell-open", "fs-exists", "window-show", "window-hide", "window-close", "fs-create-dir", "fs-read-file", "fs-write-file", "fs-remove-file", "window-unminimize", "window-start-dragging", "window-maximize", "window-minimize", "window-unmaximize", "http-request", "fs-read-dir", "notification-all"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+tokio = { version = "1", features = ["full"] }
+chrono = { version = "0.4", features = ["serde"] }
+uuid = { version = "1.0", features = ["v4", "serde"] }
+reqwest = { version = "0.11", features = ["json"] }
+anyhow = "1.0"
+lazy_static = "1.4"
+
+# 监控功能依赖
+screenshots = "0.7"
+image = { version = "0.24", features = ["png", "jpeg"] }
+base64 = "0.21"
+# OCR功能依赖 - 暂时移除leptess，使用命令行方式
+# leptess = "0.14"  # 需要复杂的vcpkg依赖，暂时禁用
+
+# Windows系统监控依赖
+[target.'cfg(windows)'.dependencies]
+winapi = { version = "0.3", features = ["winuser", "processthreadsapi", "psapi", "winnt", "handleapi"] }
+windows = { version = "0.48", features = [
+    "Win32_Foundation", 
+    "Win32_System_Threading", 
+    "Win32_UI_WindowsAndMessaging", 
+    "Win32_System_ProcessStatus",
+    "Media_Ocr",
+    "Graphics_Imaging", 
+    "Storage_Streams",
+    "Foundation",
+    "Foundation_Collections"
+] }
+
+# [[bin]]
+# name = "test_ocr" 
+# path = "src/bin/test_ocr.rs"
+
+[features]
+# This feature is used for production builds or when `devPath` points to the filesystem
+# DO NOT REMOVE!!
+custom-protocol = ["tauri/custom-protocol"] 

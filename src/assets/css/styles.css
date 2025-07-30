@@ -1,0 +1,173 @@
+/* Custom styles for My Focus app */
+body { 
+    font-family: 'Noto Sans SC', sans-serif; 
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar { 
+    width: 8px; 
+}
+
+::-webkit-scrollbar-track { 
+    background: #1f2937; 
+}
+
+::-webkit-scrollbar-thumb { 
+    background: #4b5563; 
+    border-radius: 4px; 
+}
+
+::-webkit-scrollbar-thumb:hover { 
+    background: #6b7280; 
+}
+
+/* Tab styling */
+.tab-active { 
+    background-color: #3b82f6; 
+    color: white; 
+}
+
+/* Page content visibility */
+.page-content {
+    display: block;
+}
+
+.page-content.hidden {
+    display: none !important;
+}
+
+/* Animation effects */
+.animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: .5;
+    }
+}
+
+/* Focus timeline visualization */
+.focus-timeline {
+    height: 64px;
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.focus-segment {
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.focus-segment:hover {
+    transform: scaleY(1.1);
+    z-index: 10;
+}
+
+/* Timer display styling */
+#timer-display {
+    font-variant-numeric: tabular-nums;
+    line-height: 0.8;
+}
+
+/* Fatigue gauge styling */
+.fatigue-gauge {
+    transform: rotate(-90deg);
+}
+
+/* Settings section borders */
+.settings-section {
+    border-bottom: 1px solid #4b5563;
+    padding-bottom: 0.5rem;
+}
+
+/* Task list styling */
+.task-item:hover {
+    background-color: rgba(31, 41, 55, 0.5);
+}
+
+/* Button hover effects */
+.btn-hover-scale {
+    transition: transform 200ms ease;
+}
+
+.btn-hover-scale:hover {
+    transform: scale(1.05);
+}
+
+/* Report content styling */
+.prose {
+    max-width: none;
+}
+
+.prose h4 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.prose ul {
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+}
+
+.prose li {
+    margin-bottom: 0.25rem;
+}
+
+/* Custom toggle switches */
+.toggle-switch input[type="checkbox"] {
+    appearance: none;
+    width: 44px;
+    height: 24px;
+    background-color: #4b5563;
+    border-radius: 12px;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.2s;
+}
+
+.toggle-switch input[type="checkbox"]:checked {
+    background-color: #3b82f6;
+}
+
+.toggle-switch input[type="checkbox"]::before {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.2s;
+}
+
+.toggle-switch input[type="checkbox"]:checked::before {
+    transform: translateX(20px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .w-full.max-w-7xl {
+        margin: 0.5rem;
+        height: calc(100vh - 1rem);
+    }
+    
+    #timer-display {
+        font-size: 4rem;
+    }
+    
+    .grid.grid-cols-1.lg\\:grid-cols-3 {
+        grid-template-columns: 1fr;
+    }
+    
+    .grid.grid-cols-1.md\\:grid-cols-3 {
+        grid-template-columns: 1fr;
+    }
+} 

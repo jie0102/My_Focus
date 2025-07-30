@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Focus - 专注度App原型</title>
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <!-- Google Fonts for better typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./assets/css/styles.css">
+</head>
+<body class="bg-gray-900 text-gray-200 flex items-center justify-center min-h-screen p-4 sm:p-8">
+
+    <!-- Main App Window -->
+    <div class="w-full max-w-7xl h-[85vh] min-h-[700px] bg-gray-800 rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-gray-700">
+        
+        <!-- Header and Navigation -->
+        <header class="flex items-center justify-between p-4 bg-gray-900/50 border-b border-gray-700 flex-shrink-0">
+            <div class="flex items-center space-x-3">
+                <i class="fas fa-brain text-blue-400 text-2xl"></i>
+                <h1 class="text-xl font-bold text-white">My Focus</h1>
+            </div>
+            <nav id="tabs" class="flex space-x-1 bg-gray-700/80 p-1 rounded-lg">
+                <button data-target="dashboard" class="tab-button tab-active px-3 py-1.5 text-sm font-semibold rounded-md transition-colors duration-200 flex items-center space-x-2">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>仪表盘</span>
+                </button>
+                <button data-target="timer" class="tab-button px-3 py-1.5 text-sm font-semibold rounded-md hover:bg-gray-600 transition-colors duration-200 flex items-center space-x-2">
+                    <i class="fas fa-clock"></i>
+                    <span>专注计时</span>
+                </button>
+                <button data-target="reports" class="tab-button px-3 py-1.5 text-sm font-semibold rounded-md hover:bg-gray-600 transition-colors duration-200 flex items-center space-x-2">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>专注报告</span>
+                </button>
+                <button data-target="fatigue" class="tab-button px-3 py-1.5 text-sm font-semibold rounded-md hover:bg-gray-600 transition-colors duration-200 flex items-center space-x-2">
+                    <i class="fas fa-battery-half"></i>
+                    <span>疲劳分析</span>
+                </button>
+                <button data-target="settings" class="tab-button px-3 py-1.5 text-sm font-semibold rounded-md hover:bg-gray-600 transition-colors duration-200 flex items-center space-x-2">
+                    <i class="fas fa-cog"></i>
+                    <span>设置</span>
+                </button>
+            </nav>
+            <div class="w-32"></div> <!-- Placeholder for alignment -->
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="flex-grow p-6 overflow-y-auto">
+            
+            <!-- PAGE 1: Dashboard (仪表盘) -->
+            <div id="dashboard" class="page-content">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    
+                    <!-- Left Column: Main Status & Actions -->
+                    <div class="lg:col-span-2 space-y-6">
+                        <!-- Main Status Card -->
+                        <div class="bg-gray-700/50 p-8 rounded-xl shadow-lg flex flex-col items-center justify-center text-center">
+                            <h2 class="text-lg font-semibold text-gray-400 mb-4">当前状态</h2>
+                            <div class="w-40 h-40 rounded-full bg-green-500/10 border-4 border-green-500 flex items-center justify-center mb-4 animate-pulse">
+                                <i class="fas fa-mug-hot text-6xl text-green-400"></i>
+                            </div>
+                            <p class="text-3xl font-bold text-white">深度专注中</p>
+                            <p class="text-gray-400 mt-1">当前任务: 完成App原型图设计</p>
+                            
+                            <div class="mt-8 flex space-x-4">
+                               <button class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-lg transition-transform duration-200 hover:scale-105 flex items-center space-x-2">
+                                    <i class="fas fa-stop-circle"></i>
+                                    <span>停止监控</span>
+                                </button>
+                                <button class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-3 px-8 rounded-lg transition-transform duration-200 hover:scale-105">
+                                    暂停15分钟
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Today's Focus Timeline -->
+                        <div class="bg-gray-700/50 p-6 rounded-xl shadow-lg">
+                            <h3 class="font-semibold text-white mb-4">今日专注时间轴 (最近3小时)</h3>
+                            <div class="w-full bg-gray-800 rounded-full h-10 flex overflow-hidden">
+                                <div class="bg-green-500 h-full" style="width: 25%" title="09:00 - 09:45 (专注)"></div>
+                                <div class="bg-yellow-500 h-full" style="width: 5%" title="09:45 - 09:54 (分心)"></div>
+                                <div class="bg-green-500 h-full" style="width: 30%" title="09:54 - 10:48 (专注)"></div>
+                                <div class="bg-red-500 h-full" style="width: 8%" title="10:48 - 11:02 (严重分心)"></div>
+                                <div class="bg-green-500 h-full" style="width: 20%" title="11:02 - 11:38 (专注)"></div>
+                                <div class="bg-gray-600 h-full" style="width: 12%" title="11:38 - 现在 (休息)"></div>
+                            </div>
+                            <div class="flex justify-between text-xs text-gray-400 mt-2">
+                                <span>3小时前</span>
+                                <span>2小时前</span>
+                                <span>1小时前</span>
+                                <span>现在</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Stats & Live Data -->
+                    <div class="space-y-6">
+                        <!-- Whitelist/Blacklist Prompt -->
+                        <div class="bg-yellow-900/40 border border-yellow-500/50 p-4 rounded-xl shadow-lg">
+                            <div class="flex items-start space-x-4">
+                                <i class="fas fa-exclamation-triangle text-yellow-400 text-2xl mt-1"></i>
+                                <div>
+                                    <h4 class="font-semibold text-yellow-300">请先配置监控规则</h4>
+                                    <p class="text-sm text-yellow-200/80 mt-1">为了准确识别专注与分心，请前往"设置"页面填写您的应用白名单和黑名单。</p>
+                                    <button onclick="document.querySelector('[data-target=settings]').click()" class="mt-3 bg-yellow-500/20 hover:bg-yellow-500/40 text-yellow-200 text-xs font-bold py-1 px-3 rounded-md transition-colors">
+                                        前往设置 <i class="fas fa-arrow-right ml-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Today's Tasks -->
+                        <div class="bg-gray-700/50 p-6 rounded-xl shadow-lg">
+                            <h3 class="font-semibold text-white mb-4">今日任务</h3>
+                            <ul class="space-y-3 max-h-48 overflow-y-auto pr-2">
+                                <li class="flex items-center p-2 rounded-md hover:bg-gray-800/50">
+                                    <input id="task1" type="checkbox" class="h-4 w-4 rounded bg-gray-600 border-gray-500 text-blue-500 focus:ring-blue-600" checked>
+                                    <label for="task1" class="ml-3 text-gray-300 truncate cursor-pointer">完成App原型图设计 V2</label>
+                                </li>
+                                 <li class="flex items-center p-2 rounded-md hover:bg-gray-800/50">
+                                    <input id="task2" type="checkbox" class="h-4 w-4 rounded bg-gray-600 border-gray-500 text-blue-500 focus:ring-blue-600">
+                                    <label for="task2" class="ml-3 text-gray-300 truncate cursor-pointer">准备项目周会 PPT</label>
+                                </li>
+                                <li class="flex items-center p-2 rounded-md hover:bg-gray-800/50">
+                                    <input id="task3" type="checkbox" class="h-4 w-4 rounded bg-gray-600 border-gray-500 text-blue-500 focus:ring-blue-600">
+                                    <label for="task3" class="ml-3 text-gray-300 truncate cursor-pointer">回复重要邮件</label>
+                                </li>
+                            </ul>
+                            <div class="mt-4 flex space-x-2">
+                                <input type="text" class="flex-grow bg-gray-800 border border-gray-600 rounded-lg p-2 text-sm text-gray-200 focus:ring-blue-500 focus:border-blue-500" placeholder="添加新任务...">
+                                <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold p-2 rounded-lg flex-shrink-0">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Stats Cards -->
+                        <div class="bg-gray-700/50 p-6 rounded-xl shadow-lg space-y-4">
+                            <h3 class="font-semibold text-white mb-2">今日数据统计</h3>
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-300">今日专注</span>
+                                <span class="font-bold text-green-400 text-lg">2h 45m</span>
+                            </div>
+                            <div class="w-full bg-gray-600 rounded-full h-2.5">
+                                <div class="bg-green-500 h-2.5 rounded-full" style="width: 85%"></div>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-300">今日分心</span>
+                                <span class="font-bold text-yellow-400 text-lg">28m</span>
+                            </div>
+                             <div class="w-full bg-gray-600 rounded-full h-2.5">
+                                <div class="bg-yellow-500 h-2.5 rounded-full" style="width: 15%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- PAGE 2: Focus Timer (专注计时) -->
+            <div id="timer" class="page-content hidden">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 h-full">
+                    <!-- Main Timer -->
+                    <div class="md:col-span-2 bg-gray-700/50 rounded-2xl shadow-lg flex flex-col items-center justify-center text-center p-8">
+                        <div class="mb-4">
+                            <span class="text-lg font-semibold text-blue-400">专注中 - 第 1 / 4 个番茄钟</span>
+                        </div>
+                        <h2 id="timer-display" class="text-8xl md:text-9xl font-bold tracking-tighter text-white" style="font-variant-numeric: tabular-nums;">24:17</h2>
+                        <p class="text-gray-400 mt-2">当前任务: 准备项目周会 PPT</p>
+                        <div class="mt-10 flex items-center space-x-6">
+                            <button class="bg-gray-600 hover:bg-gray-500 text-white font-bold w-20 h-20 rounded-full flex items-center justify-center transition-transform duration-200 hover:scale-105">
+                                <i class="fas fa-redo text-2xl"></i>
+                            </button>
+                            <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold w-28 h-28 rounded-full flex items-center justify-center transition-transform duration-200 hover:scale-105 shadow-2xl shadow-blue-900/50">
+                                <i class="fas fa-pause text-5xl"></i>
+                            </button>
+                             <button class="bg-gray-600 hover:bg-gray-500 text-white font-bold w-20 h-20 rounded-full flex items-center justify-center transition-transform duration-200 hover:scale-105">
+                                <i class="fas fa-stop text-2xl"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Settings and Stats -->
+                    <div class="flex flex-col space-y-6">
+                        <div class="bg-gray-700/50 p-6 rounded-xl shadow-lg">
+                            <h3 class="font-semibold text-white mb-4">计时器设置</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label for="focus-duration" class="block mb-1 text-sm font-medium text-gray-300">专注时长 (分钟)</label>
+                                    <input type="number" id="focus-duration" value="25" class="w-full bg-gray-800 border border-gray-600 rounded-lg p-2 text-gray-200 focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+                                <div>
+                                    <label for="short-break" class="block mb-1 text-sm font-medium text-gray-300">短时休息</label>
+                                    <input type="number" id="short-break" value="5" class="w-full bg-gray-800 border border-gray-600 rounded-lg p-2 text-gray-200 focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+                                <div>
+                                    <label for="long-break" class="block mb-1 text-sm font-medium text-gray-300">长时休息</label>
+                                    <input type="number" id="long-break" value="15" class="w-full bg-gray-800 border border-gray-600 rounded-lg p-2 text-gray-200 focus:ring-blue-500 focus:border-blue-500">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-gray-700/50 p-6 rounded-xl shadow-lg">
+                            <h3 class="font-semibold text-white mb-4">关联任务</h3>
+                            <select class="w-full bg-gray-800 border border-gray-600 rounded-lg p-2.5 text-gray-200 focus:ring-blue-500 focus:border-blue-500">
+                                <option>完成App原型图设计 V2</option>
+                                <option selected>准备项目周会 PPT</option>
+                                <option>回复重要邮件</option>
+                                <option>无关联任务</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 3: Focus Reports (专注报告) -->
+            <div id="reports" class="page-content hidden">
+                <div class="flex space-x-6">
+                    <!-- Reports List -->
+                    <div class="w-1/4 flex-shrink-0">
+                        <div class="bg-gray-700/50 p-4 rounded-xl h-full">
+                            <h3 class="font-semibold text-white mb-4 px-2">报告列表</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <h4 class="text-sm font-bold text-gray-400 mb-2 px-2">每周报告</h4>
+                                    <ul class="space-y-1">
+                                        <li><a href="#" class="block p-2 rounded-md bg-blue-600/30 font-semibold text-white">10月第4周 (10/23 - 10/29)</a></li>
+                                        <li><a href="#" class="block p-2 rounded-md hover:bg-gray-600/50">10月第3周 (10/16 - 10/22)</a></li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h4 class="text-sm font-bold text-gray-400 mb-2 mt-4 px-2">每日报告</h4>
+                                    <ul class="space-y-1 max-h-[400px] overflow-y-auto pr-1">
+                                        <li><a href="#" class="block p-2 rounded-md hover:bg-gray-600/50">10月29日 (周日)</a></li>
+                                        <li><a href="#" class="block p-2 rounded-md hover:bg-gray-600/50">10月28日 (周六)</a></li>
+                                        <li><a href="#" class="block p-2 rounded-md hover:bg-gray-600/50 font-semibold text-white bg-gray-600/50">10月27日 (周五)</a></li>
+                                        <li><a href="#" class="block p-2 rounded-md hover:bg-gray-600/50">10月26日 (周四)</a></li>
+                                        <li><a href="#" class="block p-2 rounded-md hover:bg-gray-600/50">10月25日 (周三)</a></li>
+                                        <li><a href="#" class="block p-2 rounded-md hover:bg-gray-600/50">10月24日 (周二)</a></li>
+                                        <li><a href="#" class="block p-2 rounded-md hover:bg-gray-600/50">10月23日 (周一)</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Report Detail -->
+                    <div class="w-3/4 bg-gray-700/50 p-6 rounded-xl overflow-y-auto">
+                        <h2 class="text-2xl font-bold text-white mb-2">2023年10月27日 每日专注报告</h2>
+                        <p class="text-gray-400 mb-6">由 Duke AI 智能生成</p>
+
+                        <!-- Key Metrics -->
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                            <div class="bg-gray-800/60 p-4 rounded-lg text-center">
+                                <p class="text-sm text-gray-400">总专注时长</p>
+                                <p class="text-2xl font-bold text-green-400">6h 13m</p>
+                            </div>
+                             <div class="bg-gray-800/60 p-4 rounded-lg text-center">
+                                <p class="text-sm text-gray-400">总分心时长</p>
+                                <p class="text-2xl font-bold text-yellow-400">1h 02m</p>
+                            </div>
+                            <div class="bg-gray-800/60 p-4 rounded-lg text-center">
+                                <p class="text-sm text-gray-400">专注度得分</p>
+                                <p class="text-2xl font-bold text-blue-400">86</p>
+                            </div>
+                            <div class="bg-gray-800/60 p-4 rounded-lg text-center">
+                                <p class="text-sm text-gray-400">打断次数</p>
+                                <p class="text-2xl font-bold text-red-400">12次</p>
+                            </div>
+                        </div>
+
+                        <!-- Focus Timeline Visualization -->
+                        <div class="mb-6">
+                            <h3 class="font-semibold text-white mb-3">全天专注分布</h3>
+                            <div class="bg-gray-800 p-4 rounded-lg">
+                                <p class="text-xs text-gray-400 mb-2">绿色: 专注, 黄色: 轻度分心, 红色: 严重分心</p>
+                                <div class="relative h-16 bg-gray-900/50 rounded">
+                                    <div class="absolute inset-0 flex justify-around border-x border-gray-700"><div class="w-px h-full bg-gray-700"></div><div class="w-px h-full bg-gray-700"></div><div class="w-px h-full bg-gray-700"></div><div class="w-px h-full bg-gray-700"></div></div>
+                                    <div class="absolute inset-0 flex">
+                                        <div style="width: 12.5%"></div>
+                                        <div class="h-full bg-green-500 rounded-l-md" style="width: 12.5%" title="09:00 - 12:00"></div>
+                                        <div class="h-full bg-yellow-500" style="width: 4.1%" title="12:00 - 13:00"></div>
+                                        <div class="h-full bg-green-500" style="width: 16.7%" title="13:00 - 17:00"></div>
+                                        <div class="h-full bg-red-500" style="width: 2.1%" title="17:00 - 17:30"></div>
+                                        <div class="h-full bg-green-500" style="width: 8.3%" title="19:00 - 21:00"></div>
+                                    </div>
+                                     <div class="absolute -bottom-5 inset-x-0 flex justify-between text-xs text-gray-500">
+                                        <span>09:00</span><span>12:00</span><span>15:00</span><span>18:00</span><span>21:00</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- AI Generated Analysis -->
+                        <div class="space-y-4 prose prose-invert prose-sm max-w-none text-gray-300">
+                            <h3 class="font-semibold text-white !mb-3">AI 智能分析总结</h3>
+                            <h4><i class="fas fa-check-circle text-green-400 mr-2"></i>表现亮点</h4>
+                            <p>今天你保持了超过6小时的高效专注，非常出色。尤其是在上午 9:00-12:00 和下午 13:00-17:00 两个时间段，你进入了深度心流状态，几乎没有受到干扰，认知资源得到了有效利用。</p>
+                            <h4><i class="fas fa-exclamation-triangle text-yellow-400 mr-2"></i>主要分心点</h4>
+                            <p>数据显示，今天的主要分心源是社交媒体应用（如微博、Twitter）和即时通讯软件（Slack）。特别是在下午五点左右，有一次长达20分钟的严重分心，这可能导致了后续任务的启动困难。</p>
+                            <h4><i class="fas fa-lightbulb text-blue-400 mr-2"></i>改进建议</h4>
+                            <ul>
+                                <li><strong>任务分批处理</strong>: 尝试将查看社交媒体和回复消息的时间集中在休息时段，避免在专注任务中途打断。</li>
+                                <li><strong>环境优化</strong>: 考虑在下午容易分心的时段，开启系统勿扰模式，并暂时退出不必要的通讯软件。</li>
+                                <li><strong>能量管理</strong>: 下午时段的疲劳度上升较快，建议在该时段开始前进行短暂的冥想或散步，以恢复精力。</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 4: Fatigue Analysis (疲劳分析) -->
+            <div id="fatigue" class="page-content hidden">
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-6">
+                        <div class="bg-gray-700/50 p-8 rounded-xl shadow-lg flex flex-col items-center">
+                            <h2 class="text-lg font-semibold text-gray-400 mb-6">当前认知疲劳度</h2>
+                            <div class="relative w-48 h-48">
+                                <svg class="w-full h-full" viewBox="0 0 36 36">
+                                    <path class="text-gray-600" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3" />
+                                    <path class="text-yellow-400" stroke-dasharray="65, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+                                </svg>
+                                <div class="absolute inset-0 flex flex-col items-center justify-center">
+                                    <span class="text-4xl font-bold text-yellow-300">65</span>
+                                    <span class="text-sm text-gray-400">/ 100</span>
+                                </div>
+                            </div>
+                            <p class="mt-6 text-2xl font-bold text-white">中度疲劳</p>
+                            <p class="text-gray-400">认知资源消耗较快，建议休息</p>
+                        </div>
+                        <div class="bg-gray-700/50 p-6 rounded-xl shadow-lg">
+                            <h3 class="font-semibold text-white mb-4">今日疲劳度趋势</h3>
+                            <div class="h-64 bg-gray-800/50 rounded-lg p-4 flex items-end space-x-2">
+                                <div class="flex-1 h-1/4 bg-blue-500 rounded-t-sm"></div><div class="flex-1 h-1/3 bg-blue-500 rounded-t-sm"></div><div class="flex-1 h-2/5 bg-blue-500 rounded-t-sm"></div><div class="flex-1 h-1/2 bg-yellow-500 rounded-t-sm"></div><div class="flex-1 h-2/3 bg-yellow-500 rounded-t-sm"></div><div class="flex-1 h-3/4 bg-red-500 rounded-t-sm"></div><div class="flex-1 h-2/3 bg-yellow-500 rounded-t-sm"></div><div class="flex-1 h-1/2 bg-gray-600 rounded-t-sm"></div>
+                            </div>
+                             <div class="flex justify-between text-xs text-gray-400 mt-2 px-2">
+                                <span>上午</span><span>中午</span><span>下午</span><span>傍晚</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-col space-y-6">
+                        <div class="bg-gray-700/50 p-6 rounded-xl shadow-lg flex-grow flex flex-col">
+                             <h3 class="font-semibold text-white mb-4">AI 疲劳干预报告</h3>
+                             <div class="prose prose-invert prose-sm max-w-none text-gray-300 flex-grow">
+                                <h4><i class="fas fa-heartbeat text-red-400 mr-2"></i>疲劳警报：认知资源即将耗尽</h4>
+                                <p>系统监测到您的连续专注时长已超过90分钟，且错误率和任务切换频率明显上升。根据认知资源消耗模型计算，您的疲劳度已达到 <strong class="text-yellow-300">65</strong>，进入"中度疲劳"区间。</p>
+                                <h4><i class="fas fa-coffee text-blue-300 mr-2"></i>智能休息建议</h4>
+                                <p>为了恢复认知能力并预防过度倦怠，AI 建议您立即进行一次 **20分钟的结构化休息**。请参考以下方案：</p>
+                                <ul>
+                                    <li><strong>前5分钟：</strong> 离开座位，进行伸展运动，远眺窗外放松眼部肌肉。</li>
+                                    <li><strong>中间10分钟：</strong> 进行正念冥想或听一段舒缓的纯音乐。避免接触新的信息输入（如手机、新闻）。</li>
+                                    <li><strong>后5分钟：</strong> 补充水分，为接下来的任务做简单的计划。</li>
+                                </ul>
+                                <p>这样的休息方式比单纯刷手机更能有效恢复您的精力。</p>
+                             </div>
+                             <button class="mt-6 w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2">
+                                <i class="fas fa-play-circle"></i>
+                                <span>开始20分钟引导式休息</span>
+                             </button>
+                        </div>
+                        <div class="h-48 rounded-xl overflow-hidden shadow-lg">
+                           <img src="https://images.unsplash.com/photo-1476820865390-c52aeebb9891?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" class="w-full h-full object-cover" alt="Relaxing nature view">
+                        </div>
+                    </div>
+                 </div>
+            </div>
+            
+            <!-- PAGE 5: Settings (设置) -->
+            <div id="settings" class="page-content hidden">
+                <div class="max-w-4xl mx-auto space-y-8">
+                    <h2 class="text-2xl font-bold text-white text-center">应用设置</h2>
+                    
+                    <div class="bg-gray-700/50 p-6 rounded-xl">
+                        <h3 class="text-lg font-semibold text-white mb-4 border-b border-gray-600 pb-2"><i class="fas fa-desktop mr-2 text-blue-400"></i>监控设置</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="whitelist" class="block mb-2 text-sm font-medium text-gray-300">应用白名单 (每行一个应用名)</label>
+                                <textarea id="whitelist" rows="4" class="w-full bg-gray-800 border border-gray-600 rounded-lg p-2.5 text-gray-200 focus:ring-blue-500 focus:border-blue-500" placeholder="e.g.&#10;Code.exe&#10;Figma.exe&#10;XCode"></textarea>
+                            </div>
+                             <div>
+                                <label for="blacklist" class="block mb-2 text-sm font-medium text-gray-300">应用黑名单 (每行一个应用名)</label>
+                                <textarea id="blacklist" rows="4" class="w-full bg-gray-800 border border-gray-600 rounded-lg p-2.5 text-gray-200 focus:ring-blue-500 focus:border-blue-500" placeholder="e.g.&#10;WeChat.exe&#10;Slack.exe"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-700/50 p-6 rounded-xl">
+                         <h3 class="text-lg font-semibold text-white mb-4 border-b border-gray-600 pb-2"><i class="fas fa-robot mr-2 text-blue-400"></i>AI 模型设置</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="api-type" class="block mb-2 text-sm font-medium text-gray-300">API 类型</label>
+                                <select id="api-type" class="w-full bg-gray-800 border border-gray-600 rounded-lg p-2.5 text-gray-200 focus:ring-blue-500 focus:border-blue-500"><option>Ollama (本地)</option><option selected>OpenAI Compatible</option><option>Claude API</option></select>
+                            </div>
+                             <div>
+                                <label for="api-url" class="block mb-2 text-sm font-medium text-gray-300">API URL</label>
+                                <input type="text" id="api-url" class="w-full bg-gray-800 border border-gray-600 rounded-lg p-2.5 text-gray-200 focus:ring-blue-500 focus:border-blue-500" value="https://api.openai.com/v1">
+                            </div>
+                             <div>
+                                <label for="api-key" class="block mb-2 text-sm font-medium text-gray-300">API Key</label>
+                                <input type="password" id="api-key" class="w-full bg-gray-800 border border-gray-600 rounded-lg p-2.5 text-gray-200 focus:ring-blue-500 focus:border-blue-500" value="xxxxxxxxxxxxxx">
+                            </div>
+                            <div>
+                                <label for="report-model" class="block mb-2 text-sm font-medium text-gray-300">报告生成模型</label>
+                                <input type="text" id="report-model" class="w-full bg-gray-800 border border-gray-600 rounded-lg p-2.5 text-gray-200 focus:ring-blue-500 focus:border-blue-500" value="gpt-4-turbo-preview">
+                            </div>
+                        </div>
+                    </div>
+
+                     <div class="bg-gray-700/50 p-6 rounded-xl">
+                         <h3 class="text-lg font-semibold text-white mb-4 border-b border-gray-600 pb-2"><i class="fas fa-sliders-h mr-2 text-blue-400"></i>通用设置</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center justify-between">
+                                <span class="text-gray-300">开机自启动</span>
+                                <label for="autostart" class="inline-flex relative items-center cursor-pointer"><input type="checkbox" value="" id="autostart" class="sr-only peer" checked><div class="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div></label>
+                            </div>
+                             <div class="flex items-center justify-between">
+                                <span class="text-gray-300">接收疲劳干预通知</span>
+                                <label for="fatigue-notify" class="inline-flex relative items-center cursor-pointer"><input type="checkbox" value="" id="fatigue-notify" class="sr-only peer" checked><div class="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end pt-4">
+                        <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition-transform duration-200 hover:scale-105 flex items-center space-x-2"><i class="fas fa-save"></i><span>保存设置</span></button>
+                    </div>
+
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- Custom JavaScript -->
+    <script src="./assets/js/app.js"></script>
+</body>
+</html>
