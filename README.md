@@ -86,7 +86,7 @@ My Focus 是一个基于 Tauri 框架开发的桌面专注度监控应用，旨�
    ```bash
    # 访问 https://ollama.ai 下载安装
    # 安装完成后拉取推荐模型
-   ollama pull llama3.1
+   ollama pull 模型名称
    ```
 3. **配置应用**: 启动应用后在设置页面配置 AI 服务
 4. **开始使用**: 启动监控功能开始专注度追踪
