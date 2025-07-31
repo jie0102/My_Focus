@@ -152,9 +152,9 @@ This project is licensed under **GNU AGPLv3** - see [LICENSE](LICENSE) for detai
 
 ---
 
-## Star Count Statistics
+## Star Trend
 
-[![Star](https://img.shields.io/github/stars/jie0102/My_Focus?style=social)](https://github.com/jie0102/My_Focus/stargazers)
+[![Star History Chart](https://api.star-history.com/svg?repos=jie0102/My_Focus&type=Date)](https://star-history.com/#jie0102/My_Focus&Date)
 
 ---
 
