@@ -45,13 +45,13 @@ The app leverages an intelligent monitoring system and AI analysis to assess you
   - Personalization: Customize monitoring interval, intervention strategies, app whitelist/blacklist
   - Completely local data storage, privacy protection
 
-- **Analysis & Reports**
-  - Focus statistics and trend analysis
-  - Historical data visualization
-  - Integrated task tracking
+
 
 ### In Development & Future Plans
-
+  - **Analysis & Reports**
+    - Focus statistics and trend analysis
+    - Historical data visualization
+    - Integrated task tracking
 - AI-powered personalized focus suggestions
 - More data visualization features
 - Personalized focus learning algorithms
