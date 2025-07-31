@@ -153,6 +153,12 @@ npm run tauri:build # 构建发布
 
 ---
 
+## Star 趋势
+
+[![Star History Chart](https://api.star-history.com/svg?repos=jie0102/My_Focus&type=Date)](https://star-history.com/#jie0102/My_Focus&Date)
+
+---
+
 <p align="center">
   <b>让专注成为习惯，让效率成为本能</b><br>
   <i>My Focus - 您的专注力管理专家，守护您的每一分专注时光。</i>
