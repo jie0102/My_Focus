@@ -152,11 +152,15 @@ This project is licensed under **GNU AGPLv3** - see [LICENSE](LICENSE) for detai
 
 ---
 
+## Star Count Statistics
+
+[![Star](https://img.shields.io/github/stars/jie0102/My_Focus?style=social)](https://github.com/jie0102/My_Focus/stargazers)
+
+---
+
 <p align="center">
   <b>Make focus a habit, make efficiency a reflex.</b><br>
   <i>My Focus - Your dedicated focus management expert, guarding every minute of your concentration.</i>
 </p>
 
-## Star Count Statistics
 
-[![Star](https://img.shields.io/github/stars/jie0102/My_Focus?style=social)](https://github.com/jie0102/My_Focus/stargazers)
