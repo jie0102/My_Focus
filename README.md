@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/jie0102/My_Focus/releases">
-    <img src="assets/icon.jpg" alt="Product Logo" width="200">
+    <img src="assets/icon.png" alt="Product Logo" width="200">
   </a>
 </p>
 
