@@ -6,7 +6,7 @@
 
 <p align="center"><b>My Focus - 专注度监控应用</b></p>
 <p align="center">
-  <a href="https://github.com/jie0102/My_Focus">English</a> | 中文 | <a href="https://github.com/jie0102/My_Focus/issues">反馈</a><br>
+  <a href="https://github.com/jie0102/My_Focus">English</a> | 中文 | <a href="https://myfocus.top">官网</a> | <a href="https://github.com/jie0102/My_Focus/issues">反馈</a><br>
 </p>
 
 <p align="center">

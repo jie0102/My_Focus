@@ -6,7 +6,7 @@
 
 <p align="center"><b>My Focus - Focus Monitoring Application</b></p>
 
-<p align="center">English | <a href="./docs/README.zh.md">中文</a> | <a href="https://github.com/jie0102/My_Focus/issues">Feedback</a><br></p>
+<p align="center">English | <a href="./docs/README.zh.md">中文</a> | <a href="https://myfocus.top">Official Site</a> | <a href="https://github.com/jie0102/My_Focus/issues">Feedback</a><br></p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/status-developing-yellow.svg">
