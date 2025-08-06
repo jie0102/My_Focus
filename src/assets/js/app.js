@@ -76,6 +76,9 @@ async function initApp() {
     try {
         console.log('初始化My Focus应用...');
         
+        // 首先加载并应用保存的主题
+        loadSavedTheme();
+        
         // 初始化后端
         await TauriAPI.initializeApp();
         
@@ -246,7 +249,7 @@ function initTimer() {
                 isRunning = false;
                 isPaused = false;
                 updateButtonState();
-                showNotification('专注时间完成！', '恭喜您完成了一个专注时段。');
+                showNotification('专注时间完成！', '恭喜您完成了一个专注时段。', 'success', true);
                 
                 // 重置到设定的专注时长
                 currentTime = focusDuration;
@@ -257,7 +260,7 @@ function initTimer() {
         isRunning = true;
         isPaused = false;
         updateButtonState();
-        showNotification('开始专注', '专注计时已开始！');
+        showNotification('开始专注', '专注计时已开始！', 'info', true);
     }
 
     // 暂停计时器
@@ -575,9 +578,13 @@ function initSettings() {
     
     // 初始化AI模型设置
     initAIModelSettings();
+    
+    // 初始化主题切换功能
+    initThemeToggle();
 
     function saveSettings() {
         const settings = {
+            theme: getCurrentTheme(),
             whitelist: getWhitelistItems(),
             blacklist: getBlacklistItems(),
             autostart: document.getElementById('autostart')?.checked || false,
@@ -602,12 +609,65 @@ function initSettings() {
         // 保存用户设置到后端
         saveUserSettingsToBackend(settings);
         
-        // 保存AI配置到后端
-        saveAIConfig();
+        // 注意：不再自动保存AI配置，需要用户点击"保存设置"按钮
         
-        // 显示保存成功提示
-        showNotification('设置已保存', '您的设置已成功保存。');
+        // 显示保存成功提示（但提醒用户还需保存AI配置）
+        showNotification('用户设置已保存', '用户偏好设置已保存，如有AI配置更改请点击"保存设置"按钮', 'success', false);
     }
+
+/**
+ * 处理保存设置按钮点击事件
+ */
+async function handleSaveSettings() {
+    const saveBtn = document.getElementById('save-settings-btn');
+    if (!saveBtn) return;
+    
+    // 更新按钮状态
+    const originalText = saveBtn.innerHTML;
+    saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>正在保存...';
+    saveBtn.disabled = true;
+    
+    try {
+        // 保存所有设置
+        await saveAllSettings();
+        
+        // 保存AI配置
+        await saveAIConfig();
+        
+        // 成功提示
+        saveBtn.innerHTML = '<i class="fas fa-check mr-2"></i>保存成功';
+        saveBtn.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+        saveBtn.classList.add('bg-green-600', 'hover:bg-green-700');
+        
+        showNotification('设置已保存', '所有设置已成功保存到本地', 'success', false);
+        
+        // 2秒后恢复按钮状态
+        setTimeout(() => {
+            saveBtn.innerHTML = originalText;
+            saveBtn.disabled = false;
+            saveBtn.classList.remove('bg-green-600', 'hover:bg-green-700');
+            saveBtn.classList.add('bg-blue-600', 'hover:bg-blue-700');
+        }, 2000);
+        
+    } catch (error) {
+        console.error('保存设置失败:', error);
+        
+        // 错误提示
+        saveBtn.innerHTML = '<i class="fas fa-exclamation-triangle mr-2"></i>保存失败';
+        saveBtn.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+        saveBtn.classList.add('bg-red-600', 'hover:bg-red-700');
+        
+        showNotification('保存失败', `设置保存失败: ${error.message || error}`, 'error', false);
+        
+        // 3秒后恢复按钮状态
+        setTimeout(() => {
+            saveBtn.innerHTML = originalText;
+            saveBtn.disabled = false;
+            saveBtn.classList.remove('bg-red-600', 'hover:bg-red-700');
+            saveBtn.classList.add('bg-blue-600', 'hover:bg-blue-700');
+        }, 3000);
+    }
+}
 
     /**
      * 保存用户设置到后端
@@ -651,6 +711,11 @@ function initSettings() {
                 loadBlacklistItems(settings.blacklist);
             } else {
                 loadBlacklistItems([]);
+            }
+            
+            // 恢复主题设置
+            if (settings.theme) {
+                applyTheme(settings.theme);
             }
             
             // 恢复其他设置值
@@ -980,6 +1045,7 @@ function getBlacklistItems() {
 async function autoSaveUserSettings() {
     try {
         const settings = {
+            theme: getCurrentTheme(),
             whitelist: getWhitelistItems(),
             blacklist: getBlacklistItems(),
             autostart: document.getElementById('autostart')?.checked || false,
@@ -1264,27 +1330,11 @@ function initAIModelSettings() {
         apiTypeSelect.addEventListener('change', onAPITypeChanged);
     }
     
-    // API URL变化时自动保存
-    const apiUrlInput = document.getElementById('api-url');
-    if (apiUrlInput) {
-        apiUrlInput.addEventListener('blur', autoSaveAIConfig);
-    }
-    
-    // API Key变化时自动保存
-    const apiKeyInput = document.getElementById('api-key');
-    if (apiKeyInput) {
-        apiKeyInput.addEventListener('blur', autoSaveAIConfig);
-    }
-    
-    // 模型选择变化时自动保存
-    const detectionModelSelect = document.getElementById('detection-model');
-    if (detectionModelSelect) {
-        detectionModelSelect.addEventListener('change', autoSaveAIConfig);
-    }
-    
-    const reportModelSelect = document.getElementById('report-model');
-    if (reportModelSelect) {
-        reportModelSelect.addEventListener('change', autoSaveAIConfig);
+    // 移除自动保存，改为手动保存机制
+    // 添加保存设置按钮事件处理器
+    const saveSettingsBtn = document.getElementById('save-settings-btn');
+    if (saveSettingsBtn) {
+        saveSettingsBtn.addEventListener('click', handleSaveSettings);
     }
     
     // 加载AI配置
@@ -1310,10 +1360,7 @@ function onAPITypeChanged() {
         clearAPITestResults();
         
         console.log(`API类型已切换到: ${selectedType}, URL已更新为: ${defaultUrls[selectedType]}`);
-        showNotification('API类型已更新', `URL已自动设置为 ${selectedType} 的默认地址`);
-        
-        // 自动保存配置
-        autoSaveAIConfig();
+        showNotification('API类型已更新', `URL已自动设置为 ${selectedType} 的默认地址，请点击"保存设置"以保存配置`, 'info', false);
     }
 }
 
@@ -1399,8 +1446,8 @@ async function testAPIConnection() {
         // 如果测试成功，加载模型列表并自动保存配置
         if (result.success) {
             await loadAvailableModels();
-            // 自动保存AI配置
-            await autoSaveAIConfig();
+            // 提示用户保存配置
+            showNotification('API测试成功', '请点击"保存设置"按钮保存配置', 'success', false);
         }
         
     } catch (error) {
@@ -2363,12 +2410,12 @@ async function updateFatigueLevel() {
 /**
  * 显示通知
  */
-function showNotification(title, message, type = 'info') {
-    // 页面内通知
+function showNotification(title, message, type = 'info', showSystemNotification = false) {
+    // 页面内通知（总是显示）
     showInPageNotification(title, message, type);
     
-    // 系统通知
-    if ('Notification' in window) {
+    // 系统通知（可选，默认关闭以避免重复）
+    if (showSystemNotification && 'Notification' in window) {
         if (Notification.permission === 'granted') {
             const options = {
                 body: message,
@@ -2866,7 +2913,7 @@ async function toggleMonitoring() {
             await TauriAPI.stopMonitoring();
             isMonitoring = false;
             updateFocusStatus('idle');
-            showNotification('监控已停止', '应用监控已关闭');
+            showNotification('监控已停止', '应用监控已关闭', 'info', true);
         } else {
             // 开始监控前进行全面检查
             console.log('开始监控前检查...');
@@ -2894,7 +2941,7 @@ async function toggleMonitoring() {
             await TauriAPI.startMonitoring();
             isMonitoring = true;
             updateFocusStatus('focused');
-            showNotification('监控已开始', '🎯 所有系统检查通过，监控已启动！');
+            showNotification('监控已开始', '🎯 所有系统检查通过，监控已启动！', 'success', true);
         }
         updateMonitoringButton();
     } catch (error) {
@@ -3254,6 +3301,216 @@ function debounce(func, wait) {
 }
 
 /**
+ * 初始化主题切换功能
+ */
+function initThemeToggle() {
+    const themeToggle = document.getElementById('theme-toggle');
+    
+    if (themeToggle) {
+        // 绑定切换事件
+        themeToggle.addEventListener('change', toggleTheme);
+        console.log('主题切换功能已初始化');
+    } else {
+        console.warn('找不到主题切换开关元素');
+    }
+    
+    // 页面加载时应用保存的主题
+    loadSavedTheme();
+}
+
+/**
+ * 切换主题
+ */
+function toggleTheme() {
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    
+    if (!themeToggle || !body) return;
+    
+    try {
+        const isDark = themeToggle.checked;
+        const newTheme = isDark ? 'dark' : 'light';
+        
+        // 应用新主题
+        applyTheme(newTheme);
+        
+        // 保存主题选择
+        saveTheme(newTheme);
+        
+        // 显示通知
+        const themeText = isDark ? '深色模式' : '浅色模式';
+        showNotification('主题已切换', `已切换到${themeText}`);
+        
+        console.log(`主题已切换为: ${newTheme}`);
+        
+    } catch (error) {
+        console.error('主题切换失败:', error);
+        showNotification('切换失败', '主题切换失败，请重试');
+    }
+}
+
+/**
+ * 应用主题
+ */
+function applyTheme(theme) {
+    const body = document.body;
+    
+    if (!body) return;
+    
+    // 设置data-theme属性
+    body.setAttribute('data-theme', theme);
+    
+    // 更新切换开关状态（不触发事件）
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+        themeToggle.removeEventListener('change', toggleTheme);
+        themeToggle.checked = theme === 'dark';
+        themeToggle.addEventListener('change', toggleTheme);
+    }
+    
+    // 触发自定义事件，供其他组件监听
+    const themeChangeEvent = new CustomEvent('themeChanged', {
+        detail: { theme }
+    });
+    document.dispatchEvent(themeChangeEvent);
+    
+    console.log(`主题已应用: ${theme}`);
+}
+
+/**
+ * 保存主题到本地存储
+ */
+function saveTheme(theme) {
+    try {
+        localStorage.setItem('myFocusTheme', theme);
+        
+        // 同时保存到用户设置
+        const settings = {
+            theme: theme,
+            // 获取其他现有设置
+            whitelist: getWhitelistItems(),
+            blacklist: getBlacklistItems(),
+            autostart: document.getElementById('autostart')?.checked || false,
+            fatigue_notify: document.getElementById('fatigue-notify')?.checked || false,
+            
+            // 分心干预设置
+            distraction_intervention: {
+                enabled: document.getElementById('distraction-intervention-enabled')?.checked || true,
+                light_distraction_notification: document.getElementById('light-distraction-notification')?.checked || true,
+                severe_distraction_popup: document.getElementById('severe-distraction-popup')?.checked || true,
+                encouragement_enabled: document.getElementById('encouragement-enabled')?.checked || true,
+                intervention_cooldown_minutes: parseInt(document.getElementById('intervention-cooldown')?.value || '5'),
+                notification_sound: document.getElementById('intervention-sound')?.checked || true,
+                popup_duration_seconds: parseInt(document.getElementById('popup-duration')?.value || '10'),
+                encouragement_frequency: document.getElementById('encouragement-frequency')?.value || 'medium'
+            }
+        };
+        
+        // 静默保存用户设置（包含主题）
+        saveUserSettingsToBackendSilently(settings);
+        
+        console.log(`主题已保存: ${theme}`);
+        
+    } catch (error) {
+        console.error('保存主题失败:', error);
+    }
+}
+
+/**
+ * 静默保存用户设置到后端（不显示通知）
+ */
+async function saveUserSettingsToBackendSilently(settings) {
+    try {
+        await TauriAPI.saveUserSettings(settings);
+        console.log('用户设置（包含主题）已静默保存到后端');
+        
+        // 同时保存到本地存储作为备份
+        localStorage.setItem('myFocusSettings', JSON.stringify(settings));
+    } catch (error) {
+        console.error('静默保存用户设置到后端失败:', error);
+        // 如果后端保存失败，至少保存到本地存储
+        localStorage.setItem('myFocusSettings', JSON.stringify(settings));
+    }
+}
+
+/**
+ * 加载保存的主题
+ */
+function loadSavedTheme() {
+    try {
+        // 首先尝试从本地存储读取
+        let savedTheme = localStorage.getItem('myFocusTheme');
+        
+        // 如果本地存储没有，尝试从用户设置读取
+        if (!savedTheme) {
+            const savedSettings = localStorage.getItem('myFocusSettings');
+            if (savedSettings) {
+                const settings = JSON.parse(savedSettings);
+                savedTheme = settings.theme;
+            }
+        }
+        
+        // 如果还是没有，使用默认深色主题
+        if (!savedTheme) {
+            savedTheme = 'dark';
+        }
+        
+        console.log(`加载保存的主题: ${savedTheme}`);
+        
+        // 应用主题
+        applyTheme(savedTheme);
+        
+        // 异步从后端加载完整的用户设置并同步主题
+        loadUserSettingsAndSyncTheme();
+        
+    } catch (error) {
+        console.error('加载保存的主题失败:', error);
+        // 出错时使用默认深色主题
+        applyTheme('dark');
+    }
+}
+
+/**
+ * 从后端加载用户设置并同步主题
+ */
+async function loadUserSettingsAndSyncTheme() {
+    try {
+        const settings = await TauriAPI.loadUserSettings();
+        
+        if (settings && settings.theme) {
+            console.log(`从后端同步主题: ${settings.theme}`);
+            applyTheme(settings.theme);
+        }
+        
+    } catch (error) {
+        console.error('从后端同步主题失败:', error);
+        // 不影响应用继续运行
+    }
+}
+
+/**
+ * 获取当前主题
+ */
+function getCurrentTheme() {
+    const body = document.body;
+    return body ? body.getAttribute('data-theme') || 'dark' : 'dark';
+}
+
+/**
+ * 监听主题变化事件（供其他组件使用）
+ */
+function onThemeChanged(callback) {
+    document.addEventListener('themeChanged', callback);
+}
+
+/**
+ * 移除主题变化监听器
+ */
+function offThemeChanged(callback) {
+    document.removeEventListener('themeChanged', callback);
+}
+
+/**
  * 批量DOM更新优化
  */
 function batchDOMUpdates(updates) {
@@ -3517,16 +3774,38 @@ function showDistractionIntervention(payload) {
     
     const { type, message, urgent, duration_seconds, sound_enabled } = payload;
     
+    // 发送系统通知（仅分心干预，鼓励消息只显示应用内通知）
+    let title, notificationType, showSystemNotif;
+    
+    if (type === 'encouragement') {
+        // 专注鼓励消息 - 仅应用内通知
+        title = '🎉 专注表现优秀';
+        notificationType = 'success';
+        showSystemNotif = false;
+    } else if (urgent) {
+        // 严重分心警告 - 显示系统通知
+        title = '🚨 严重分心警告';
+        notificationType = 'error';
+        showSystemNotif = true;
+    } else {
+        // 轻度分心提醒 - 显示系统通知
+        title = '⚠️ 专注提醒';
+        notificationType = 'warning';
+        showSystemNotif = true;
+    }
+    
+    showNotification(title, message, notificationType, showSystemNotif);
+    
     // 创建弹窗HTML
     const modalHtml = `
         <div id="distraction-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style="z-index: 10000;">
             <div class="bg-white rounded-lg p-8 max-w-md mx-4 text-center relative transform animate-bounce">
                 <div class="mb-6">
                     <div class="text-6xl mb-4">
-                        ${urgent ? '🚨' : '⚠️'}
+                        ${type === 'encouragement' ? '🎉' : (urgent ? '🚨' : '⚠️')}
                     </div>
-                    <h2 class="text-2xl font-bold ${urgent ? 'text-red-600' : 'text-orange-500'} mb-2">
-                        ${urgent ? '严重分心警告' : '专注提醒'}
+                    <h2 class="text-2xl font-bold ${type === 'encouragement' ? 'text-green-600' : (urgent ? 'text-red-600' : 'text-orange-500')} mb-2">
+                        ${type === 'encouragement' ? '专注表现优秀' : (urgent ? '严重分心警告' : '专注提醒')}
                     </h2>
                     <p class="text-gray-700 text-lg leading-relaxed">
                         ${message}

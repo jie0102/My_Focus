@@ -1,33 +1,267 @@
-/* Custom styles for My Focus app */
-body { 
-    font-family: 'Noto Sans SC', sans-serif; 
+/* 主题颜色变量定义 */
+:root {
+    /* 深色主题 (默认) - 深海星空配色 */
+    --bg-primary: #0a0e1a;
+    --bg-secondary: #1a1f2e;
+    --bg-tertiary: #252b3f;
+    --bg-card: rgba(37, 43, 63, 0.6);
+    --bg-hover: rgba(88, 166, 255, 0.08);
+    
+    --text-primary: #f0f6fc;
+    --text-secondary: #c9d1d9;
+    --text-tertiary: #8b949e;
+    --text-muted: #6e7681;
+    
+    --border-primary: #30363d;
+    --border-secondary: #21262d;
+    
+    --accent-blue: #58a6ff;
+    --accent-blue-hover: #388bfd;
+    --accent-green: #3fb950;
+    --accent-green-hover: #2ea043;
+    --accent-yellow: #f2cc60;
+    --accent-yellow-hover: #e5b73b;
+    --accent-red: #f85149;
+    --accent-red-hover: #f53e35;
+    --accent-purple: #a5a5f5;
+    --accent-purple-hover: #9292f0;
+    --accent-cyan: #39d0d8;
+    --accent-cyan-hover: #1fc7d0;
+    
+    --scrollbar-track: #1a1f2e;
+    --scrollbar-thumb: #30363d;
+    --scrollbar-thumb-hover: #484f58;
+    
+    /* 状态颜色 - 现代化配色 */
+    --status-focused-bg: linear-gradient(135deg, rgba(0, 212, 170, 0.12), rgba(63, 185, 80, 0.08));
+    --status-focused-border: #00d4aa;
+    --status-focused-text: #2dd4bf;
+    
+    --status-distracted-bg: rgba(255, 140, 66, 0.1);
+    --status-distracted-border: #ff8c42;
+    --status-distracted-text: #ffab70;
+    
+    --status-severe-bg: rgba(248, 81, 73, 0.12);
+    --status-severe-border: #f85149;
+    --status-severe-text: #fca5a5;
+    
+    --status-idle-bg: rgba(110, 118, 129, 0.08);
+    --status-idle-border: #6e7681;
+    --status-idle-text: #8b949e;
 }
 
-/* Scrollbar styling */
+/* 浅色主题 */
+[data-theme="light"] {
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8fafc;
+    --bg-tertiary: #f1f5f9;
+    --bg-card: rgba(248, 250, 252, 0.8);
+    --bg-hover: rgba(226, 232, 240, 0.8);
+    
+    --text-primary: #0f172a;
+    --text-secondary: #1e293b;
+    --text-tertiary: #475569;
+    --text-muted: #64748b;
+    
+    --border-primary: #cbd5e1;
+    --border-secondary: #94a3b8;
+    
+    --accent-blue: #2563eb;
+    --accent-blue-hover: #1d4ed8;
+    --accent-green: #059669;
+    --accent-green-hover: #047857;
+    --accent-yellow: #d97706;
+    --accent-yellow-hover: #b45309;
+    --accent-red: #dc2626;
+    --accent-red-hover: #b91c1c;
+    --accent-purple: #7c3aed;
+    --accent-purple-hover: #6d28d9;
+    
+    --scrollbar-track: #f1f5f9;
+    --scrollbar-thumb: #94a3b8;
+    --scrollbar-thumb-hover: #64748b;
+    
+    /* 浅色主题的状态颜色 */
+    --status-focused-bg: rgba(5, 150, 105, 0.1);
+    --status-focused-border: #059669;
+    --status-focused-text: #047857;
+    
+    --status-distracted-bg: rgba(217, 119, 6, 0.1);
+    --status-distracted-border: #d97706;
+    --status-distracted-text: #b45309;
+    
+    --status-severe-bg: rgba(220, 38, 38, 0.1);
+    --status-severe-border: #dc2626;
+    --status-severe-text: #b91c1c;
+    
+    --status-idle-bg: rgba(148, 163, 184, 0.1);
+    --status-idle-border: #94a3b8;
+    --status-idle-text: #64748b;
+}
+
+/* 基础样式覆盖 */
+body { 
+    font-family: 'Noto Sans SC', sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-secondary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* 主应用容器样式覆盖 - 全屏模式 */
+.app-container {
+    background-color: var(--bg-secondary);
+    border: none;
+}
+
+/* 卡片和容器样式 */
+.theme-card {
+    background-color: var(--bg-card);
+    border-color: var(--border-primary);
+}
+
+.theme-card-hover:hover {
+    background-color: var(--bg-hover);
+}
+
+/* 文本颜色类 */
+.theme-text-primary {
+    color: var(--text-primary);
+}
+
+.theme-text-secondary {
+    color: var(--text-secondary);
+}
+
+.theme-text-tertiary {
+    color: var(--text-tertiary);
+}
+
+.theme-text-muted {
+    color: var(--text-muted);
+}
+
+/* 边框颜色类 */
+.theme-border {
+    border-color: var(--border-primary);
+}
+
+.theme-border-secondary {
+    border-color: var(--border-secondary);
+}
+
+/* 按钮颜色类 */
+.theme-btn-blue {
+    background-color: var(--accent-blue);
+}
+
+.theme-btn-blue:hover {
+    background-color: var(--accent-blue-hover);
+}
+
+.theme-btn-green {
+    background-color: var(--accent-green);
+}
+
+.theme-btn-green:hover {
+    background-color: var(--accent-green-hover);
+}
+
+.theme-btn-yellow {
+    background-color: var(--accent-yellow);
+}
+
+.theme-btn-yellow:hover {
+    background-color: var(--accent-yellow-hover);
+}
+
+.theme-btn-red {
+    background-color: var(--accent-red);
+}
+
+.theme-btn-red:hover {
+    background-color: var(--accent-red-hover);
+}
+
+.theme-btn-purple {
+    background-color: var(--accent-purple);
+}
+
+.theme-btn-purple:hover {
+    background-color: var(--accent-purple-hover);
+}
+
+/* 输入框样式 */
+.theme-input {
+    background-color: var(--bg-tertiary);
+    border-color: var(--border-secondary);
+    color: var(--text-secondary);
+}
+
+.theme-input:focus {
+    border-color: var(--accent-blue);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* 状态指示器样式 */
+.status-focused {
+    background-color: var(--status-focused-bg);
+    border-color: var(--status-focused-border);
+    color: var(--status-focused-text);
+}
+
+.status-distracted {
+    background-color: var(--status-distracted-bg);
+    border-color: var(--status-distracted-border);
+    color: var(--status-distracted-text);
+}
+
+.status-severe {
+    background-color: var(--status-severe-bg);
+    border-color: var(--status-severe-border);
+    color: var(--status-severe-text);
+}
+
+.status-idle {
+    background-color: var(--status-idle-bg);
+    border-color: var(--status-idle-border);
+    color: var(--status-idle-text);
+}
+
+/* 滚动条样式 */
 ::-webkit-scrollbar { 
     width: 8px; 
 }
 
 ::-webkit-scrollbar-track { 
-    background: #1f2937; 
+    background: var(--scrollbar-track);
 }
 
 ::-webkit-scrollbar-thumb { 
-    background: #4b5563; 
+    background: var(--scrollbar-thumb);
     border-radius: 4px; 
 }
 
 ::-webkit-scrollbar-thumb:hover { 
-    background: #6b7280; 
+    background: var(--scrollbar-thumb-hover);
 }
 
-/* Tab styling */
+/* Tab 样式覆盖 */
+.tab-button {
+    transition: all 0.2s ease;
+}
+
 .tab-active { 
-    background-color: #3b82f6; 
+    background-color: var(--accent-blue);
     color: white; 
 }
 
-/* Page content visibility */
+.tab-button:not(.tab-active):hover {
+    background-color: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+/* 页面内容可见性 */
 .page-content {
     display: block;
 }
@@ -36,7 +270,7 @@ body {
     display: none !important;
 }
 
-/* Animation effects */
+/* 动画效果 */
 .animate-pulse {
     animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
@@ -50,7 +284,7 @@ body {
     }
 }
 
-/* Focus timeline visualization */
+/* 专注时间轴可视化 */
 .focus-timeline {
     height: 64px;
     border-radius: 0.5rem;
@@ -67,29 +301,29 @@ body {
     z-index: 10;
 }
 
-/* Timer display styling */
+/* 计时器显示样式 */
 #timer-display {
     font-variant-numeric: tabular-nums;
     line-height: 0.8;
 }
 
-/* Fatigue gauge styling */
+/* 疲劳度仪表样式 */
 .fatigue-gauge {
     transform: rotate(-90deg);
 }
 
-/* Settings section borders */
+/* 设置部分边框 */
 .settings-section {
-    border-bottom: 1px solid #4b5563;
+    border-bottom: 1px solid var(--border-secondary);
     padding-bottom: 0.5rem;
 }
 
-/* Task list styling */
+/* 任务列表样式 */
 .task-item:hover {
-    background-color: rgba(31, 41, 55, 0.5);
+    background-color: var(--bg-hover);
 }
 
-/* Button hover effects */
+/* 按钮悬停效果 */
 .btn-hover-scale {
     transition: transform 200ms ease;
 }
@@ -98,7 +332,7 @@ body {
     transform: scale(1.05);
 }
 
-/* Report content styling */
+/* 报告内容样式 */
 .prose {
     max-width: none;
 }
@@ -107,6 +341,7 @@ body {
     margin-top: 1.5rem;
     margin-bottom: 0.5rem;
     font-weight: 600;
+    color: var(--text-primary);
 }
 
 .prose ul {
@@ -119,21 +354,31 @@ body {
     margin-bottom: 0.25rem;
 }
 
-/* Custom toggle switches */
+.prose p {
+    color: var(--text-secondary);
+}
+
+.prose strong {
+    color: var(--text-primary);
+}
+
+/* 自定义切换开关 */
 .toggle-switch input[type="checkbox"] {
     appearance: none;
     width: 44px;
     height: 24px;
-    background-color: #4b5563;
+    background-color: var(--bg-tertiary);
     border-radius: 12px;
     position: relative;
     cursor: pointer;
     outline: none;
     transition: background-color 0.2s;
+    border: 1px solid var(--border-secondary);
 }
 
 .toggle-switch input[type="checkbox"]:checked {
-    background-color: #3b82f6;
+    background-color: var(--accent-blue);
+    border-color: var(--accent-blue);
 }
 
 .toggle-switch input[type="checkbox"]::before {
@@ -141,22 +386,91 @@ body {
     position: absolute;
     top: 2px;
     left: 2px;
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     background-color: white;
     border-radius: 50%;
     transition: transform 0.2s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .toggle-switch input[type="checkbox"]:checked::before {
-    transform: translateX(20px);
+    transform: translateX(18px);
 }
 
-/* Responsive adjustments */
+/* 浅色主题下切换开关的优化 */
+[data-theme="light"] .toggle-switch input[type="checkbox"] {
+    border: 2px solid var(--border-secondary);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .toggle-switch input[type="checkbox"]:checked {
+    box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+}
+
+/* 主题切换动画 */
+* {
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 300ms;
+}
+
+/* 模态框样式 */
+.modal-overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="light"] .modal-overlay {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.modal-content {
+    background-color: var(--bg-secondary);
+    border-color: var(--border-primary);
+}
+
+/* 通知样式 */
+.notification {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="light"] .notification {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* 工具提示样式 */
+.tooltip {
+    background-color: var(--bg-tertiary);
+    border-color: var(--border-secondary);
+    color: var(--text-secondary);
+}
+
+/* 进度条样式 */
+.progress-bar {
+    background-color: var(--bg-tertiary);
+}
+
+.progress-fill-green {
+    background-color: var(--accent-green);
+}
+
+.progress-fill-yellow {
+    background-color: var(--accent-yellow);
+}
+
+.progress-fill-red {
+    background-color: var(--accent-red);
+}
+
+.progress-fill-blue {
+    background-color: var(--accent-blue);
+}
+
+/* 响应式调整 - 全屏模式 */
 @media (max-width: 768px) {
-    .w-full.max-w-7xl {
-        margin: 0.5rem;
-        height: calc(100vh - 1rem);
+    .app-container {
+        height: 100vh;
+        width: 100vw;
     }
     
     #timer-display {
@@ -170,4 +484,501 @@ body {
     .grid.grid-cols-1.md\\:grid-cols-3 {
         grid-template-columns: 1fr;
     }
-} 
+}
+
+/* 浅色主题特定调整 */
+[data-theme="light"] .shadow-2xl {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .shadow-lg {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .shadow-md {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* 确保图标在浅色主题下可见 */
+[data-theme="light"] .text-gray-400 {
+    color: var(--text-tertiary) !important;
+}
+
+[data-theme="light"] .text-gray-300 {
+    color: var(--text-secondary) !important;
+}
+
+[data-theme="light"] .text-gray-200 {
+    color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .text-white {
+    color: var(--text-primary) !important;
+}
+
+/* 按钮在浅色主题下的调整 */
+[data-theme="light"] .bg-gray-600 {
+    background-color: var(--bg-tertiary) !important;
+    color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .bg-gray-700 {
+    background-color: var(--bg-card) !important;
+}
+
+[data-theme="light"] .bg-gray-800 {
+    background-color: var(--bg-secondary) !important;
+}
+
+[data-theme="light"] .bg-gray-900 {
+    background-color: var(--bg-primary) !important;
+}
+
+/* 边框在浅色主题下的调整 */
+[data-theme="light"] .border-gray-600 {
+    border-color: var(--border-secondary) !important;
+}
+
+[data-theme="light"] .border-gray-700 {
+    border-color: var(--border-primary) !important;
+}
+
+/* Tab 按钮的主题样式覆盖 */
+.tab-button:not(.tab-active) {
+    color: var(--text-secondary);
+}
+
+.tab-button:not(.tab-active):hover {
+    background-color: var(--bg-hover) !important;
+    color: var(--text-primary) !important;
+}
+
+/* 悬停效果的通用覆盖 */
+.hover\:bg-gray-600:hover {
+    background-color: var(--bg-hover) !important;
+}
+
+.hover\:bg-gray-700:hover {
+    background-color: var(--bg-hover) !important;
+}
+
+.hover\:bg-gray-800:hover {
+    background-color: var(--bg-hover) !important;
+}
+
+/* 卡片背景的覆盖 */
+.bg-gray-700\/50 {
+    background-color: var(--bg-card) !important;
+}
+
+.bg-gray-800\/50 {
+    background-color: var(--bg-card) !important;
+}
+
+.bg-gray-800\/60 {
+    background-color: var(--bg-card) !important;
+}
+
+.bg-gray-900\/50 {
+    background-color: var(--bg-card) !important;
+}
+
+/* 输入框和选择框的主题覆盖 */
+input[type="text"], 
+input[type="number"], 
+input[type="password"], 
+select, 
+textarea {
+    background-color: var(--bg-tertiary) !important;
+    border-color: var(--border-secondary) !important;
+    color: var(--text-secondary) !important;
+}
+
+input[type="text"]:focus, 
+input[type="number"]:focus, 
+input[type="password"]:focus, 
+select:focus, 
+textarea:focus {
+    border-color: var(--accent-blue) !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+}
+
+/* 浅色主题下表单元素的特殊优化 */
+[data-theme="light"] input[type="text"], 
+[data-theme="light"] input[type="number"], 
+[data-theme="light"] input[type="password"], 
+[data-theme="light"] select, 
+[data-theme="light"] textarea {
+    background-color: white !important;
+    border: 2px solid var(--border-secondary) !important;
+    color: var(--text-primary) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] input[type="text"]:focus, 
+[data-theme="light"] input[type="number"]:focus, 
+[data-theme="light"] input[type="password"]:focus, 
+[data-theme="light"] select:focus, 
+[data-theme="light"] textarea:focus {
+    border-color: var(--accent-blue) !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15), 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+    outline: none;
+}
+
+[data-theme="light"] input[type="text"]:hover, 
+[data-theme="light"] input[type="number"]:hover, 
+[data-theme="light"] input[type="password"]:hover, 
+[data-theme="light"] select:hover, 
+[data-theme="light"] textarea:hover {
+    border-color: var(--border-primary) !important;
+}
+
+/* 复选框样式覆盖 */
+input[type="checkbox"] {
+    accent-color: var(--accent-blue);
+}
+
+/* 占位符文本颜色 */
+::placeholder {
+    color: var(--text-muted) !important;
+    opacity: 1;
+}
+
+/* 选项颜色 */
+option {
+    background-color: var(--bg-tertiary);
+    color: var(--text-secondary);
+}
+
+/* 深色主题下的背景颜色覆盖 */
+[data-theme="dark"] .bg-gray-500\/10 {
+    background-color: rgba(107, 114, 128, 0.1) !important;
+}
+
+[data-theme="dark"] .bg-green-500\/10 {
+    background-color: rgba(16, 185, 129, 0.1) !important;
+}
+
+[data-theme="dark"] .bg-yellow-500\/10 {
+    background-color: rgba(245, 158, 11, 0.1) !important;
+}
+
+[data-theme="dark"] .bg-red-500\/10 {
+    background-color: rgba(239, 68, 68, 0.1) !important;
+}
+
+/* 浅色主题下的背景颜色覆盖 */
+[data-theme="light"] .bg-gray-500\/10 {
+    background-color: rgba(148, 163, 184, 0.1) !important;
+}
+
+[data-theme="light"] .bg-green-500\/10 {
+    background-color: rgba(5, 150, 105, 0.1) !important;
+}
+
+[data-theme="light"] .bg-yellow-500\/10 {
+    background-color: rgba(217, 119, 6, 0.1) !important;
+}
+
+[data-theme="light"] .bg-red-500\/10 {
+    background-color: rgba(220, 38, 38, 0.1) !important;
+}
+
+/* 浅色主题专用按钮样式优化 */
+[data-theme="light"] .tab-button {
+    border: 1px solid var(--border-secondary);
+    color: var(--text-primary);
+}
+
+[data-theme="light"] .tab-button:not(.tab-active) {
+    background-color: var(--bg-tertiary);
+    color: var(--text-secondary);
+}
+
+[data-theme="light"] .tab-button:not(.tab-active):hover {
+    background-color: var(--bg-hover) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-primary);
+}
+
+[data-theme="light"] .tab-active {
+    background-color: var(--accent-blue) !important;
+    color: white !important;
+    border-color: var(--accent-blue);
+    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+}
+
+/* 通用按钮在浅色主题下的优化 */
+[data-theme="light"] button {
+    border: 1px solid transparent;
+}
+
+[data-theme="light"] .bg-green-600,
+[data-theme="light"] .bg-blue-600,
+[data-theme="light"] .bg-red-600,
+[data-theme="light"] .bg-yellow-600,
+[data-theme="light"] .bg-gray-600 {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+[data-theme="light"] .bg-green-600:hover,
+[data-theme="light"] .bg-blue-600:hover,
+[data-theme="light"] .bg-red-600:hover,
+[data-theme="light"] .bg-yellow-600:hover,
+[data-theme="light"] .bg-gray-600:hover {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* 灰色按钮在浅色主题下的特殊处理 */
+[data-theme="light"] .bg-gray-600 {
+    background-color: var(--border-secondary) !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-primary);
+}
+
+[data-theme="light"] .bg-gray-600:hover {
+    background-color: var(--text-tertiary) !important;
+    color: white !important;
+}
+
+/* 浅色主题下文本可读性优化 */
+[data-theme="light"] .text-gray-500 {
+    color: var(--text-tertiary) !important;
+}
+
+[data-theme="light"] .text-gray-400 {
+    color: var(--text-muted) !important;
+}
+
+[data-theme="light"] .text-gray-300 {
+    color: var(--text-secondary) !important;
+}
+
+[data-theme="light"] .text-gray-200 {
+    color: var(--text-primary) !important;
+}
+
+/* 改进小字体的对比度 */
+[data-theme="light"] .text-xs {
+    color: var(--text-tertiary);
+    font-weight: 500;
+}
+
+[data-theme="light"] .text-sm {
+    color: var(--text-secondary);
+}
+
+/* 占位符文本优化 */
+[data-theme="light"] ::placeholder {
+    color: var(--text-tertiary) !important;
+    opacity: 0.8;
+}
+
+/* 链接颜色优化 */
+[data-theme="light"] .text-blue-400 {
+    color: var(--accent-blue) !important;
+}
+
+[data-theme="light"] .text-blue-400:hover {
+    color: var(--accent-blue-hover) !important;
+}
+
+/* 浅色主题下卡片和容器的阴影优化 */
+[data-theme="light"] .theme-card {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--border-primary);
+}
+
+[data-theme="light"] .theme-card:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+[data-theme="light"] .bg-gray-700\/50 {
+    background-color: white !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+    border: 1px solid var(--border-primary);
+}
+
+[data-theme="light"] .bg-gray-800\/60,
+[data-theme="light"] .bg-gray-800\/50 {
+    background-color: var(--bg-secondary) !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    border: 1px solid var(--border-primary);
+}
+
+/* 模态框在浅色主题下的优化 */
+[data-theme="light"] .modal-content {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15), 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border-primary);
+}
+
+/* 通知和提示框在浅色主题下的优化 */
+[data-theme="light"] .bg-yellow-900\/40 {
+    background-color: rgba(255, 243, 186, 0.8) !important;
+    border-color: #d97706 !important;
+    box-shadow: 0 2px 4px rgba(217, 119, 6, 0.1);
+}
+
+/* 进度条容器优化 */
+[data-theme="light"] .progress-bar {
+    background-color: var(--bg-tertiary);
+    border: 1px solid var(--border-primary);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* ======================================
+   深色主题现代化视觉效果升级
+   ====================================== */
+
+/* 深色主题专用阴影系统 */
+[data-theme="dark"] .theme-card,
+[data-theme="dark"] .bg-gray-700\/50 {
+    box-shadow: 
+        0 4px 8px rgba(0, 0, 0, 0.25),
+        0 2px 4px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-primary);
+}
+
+[data-theme="dark"] .theme-card:hover,
+[data-theme="dark"] .bg-gray-700\/50:hover {
+    box-shadow: 
+        0 8px 16px rgba(0, 0, 0, 0.3),
+        0 4px 8px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    transform: translateY(-1px);
+    transition: all 0.2s ease;
+}
+
+/* 深色主题按钮发光效果 */
+[data-theme="dark"] .bg-blue-600,
+[data-theme="dark"] .theme-btn-blue {
+    box-shadow: 
+        0 0 12px rgba(88, 166, 255, 0.2),
+        0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .bg-blue-600:hover,
+[data-theme="dark"] .theme-btn-blue:hover {
+    box-shadow: 
+        0 0 20px rgba(88, 166, 255, 0.3),
+        0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .bg-green-600,
+[data-theme="dark"] .theme-btn-green {
+    box-shadow: 
+        0 0 12px rgba(63, 185, 80, 0.2),
+        0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .bg-green-600:hover {
+    box-shadow: 
+        0 0 20px rgba(63, 185, 80, 0.3),
+        0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Tab按钮的现代化效果 */
+[data-theme="dark"] .tab-active {
+    box-shadow: 
+        0 0 15px rgba(88, 166, 255, 0.25),
+        0 2px 8px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(88, 166, 255, 0.3);
+}
+
+[data-theme="dark"] .tab-button:not(.tab-active) {
+    background: linear-gradient(145deg, 
+        rgba(37, 43, 63, 0.8) 0%, 
+        rgba(26, 31, 46, 0.9) 100%);
+    border: 1px solid var(--border-primary);
+    box-shadow: 
+        0 1px 3px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.03);
+}
+
+[data-theme="dark"] .tab-button:not(.tab-active):hover {
+    background: linear-gradient(145deg, 
+        rgba(37, 43, 63, 1) 0%, 
+        rgba(26, 31, 46, 1) 100%);
+    box-shadow: 
+        0 2px 6px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* 状态圆圈的发光效果 */
+[data-theme="dark"] .status-focused #status-circle {
+    box-shadow: 
+        0 0 25px rgba(0, 212, 170, 0.3),
+        0 0 50px rgba(0, 212, 170, 0.15),
+        inset 0 2px 4px rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(0, 212, 170, 0.4);
+}
+
+[data-theme="dark"] .status-distracted #status-circle {
+    box-shadow: 
+        0 0 25px rgba(255, 140, 66, 0.3),
+        0 0 50px rgba(255, 140, 66, 0.15);
+    border: 2px solid rgba(255, 140, 66, 0.4);
+}
+
+[data-theme="dark"] .status-severe #status-circle {
+    box-shadow: 
+        0 0 25px rgba(248, 81, 73, 0.3),
+        0 0 50px rgba(248, 81, 73, 0.15);
+    border: 2px solid rgba(248, 81, 73, 0.4);
+}
+
+/* 输入框的深色主题优化 */
+[data-theme="dark"] input[type="text"],
+[data-theme="dark"] input[type="number"],
+[data-theme="dark"] input[type="password"],
+[data-theme="dark"] select,
+[data-theme="dark"] textarea {
+    background: linear-gradient(145deg, 
+        var(--bg-tertiary) 0%, 
+        rgba(37, 43, 63, 0.8) 100%);
+    border: 1px solid var(--border-primary);
+    box-shadow: 
+        inset 0 2px 4px rgba(0, 0, 0, 0.15),
+        0 1px 2px rgba(255, 255, 255, 0.02);
+}
+
+[data-theme="dark"] input[type="text"]:focus,
+[data-theme="dark"] input[type="number"]:focus,
+[data-theme="dark"] input[type="password"]:focus,
+[data-theme="dark"] select:focus,
+[data-theme="dark"] textarea:focus {
+    border-color: var(--accent-blue);
+    box-shadow: 
+        0 0 15px rgba(88, 166, 255, 0.2),
+        0 0 0 3px rgba(88, 166, 255, 0.1),
+        inset 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* 主应用容器的渐变背景 - 全屏模式 */
+[data-theme="dark"] .app-container {
+    background: linear-gradient(135deg, 
+        var(--bg-secondary) 0%,
+        rgba(26, 31, 46, 0.95) 50%,
+        var(--bg-secondary) 100%);
+    border: none;
+}
+
+/* 滚动条的现代化样式 */
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, 
+        rgba(88, 166, 255, 0.2) 0%,
+        rgba(48, 54, 61, 0.8) 100%);
+    border: 1px solid rgba(88, 166, 255, 0.1);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, 
+        rgba(88, 166, 255, 0.3) 0%,
+        rgba(72, 79, 88, 1) 100%);
+    box-shadow: 
+        inset 0 1px 2px rgba(0, 0, 0, 0.3),
+        0 0 8px rgba(88, 166, 255, 0.2);
+}

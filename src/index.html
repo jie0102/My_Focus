@@ -19,18 +19,18 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="./assets/css/styles.css">
 </head>
-<body class="bg-gray-900 text-gray-200 flex items-center justify-center min-h-screen p-4 sm:p-8">
+<body class="h-screen overflow-hidden" data-theme="dark">
 
     <!-- Main App Window -->
-    <div class="w-full max-w-7xl h-[85vh] min-h-[700px] bg-gray-800 rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-gray-700">
+    <div class="w-screen h-screen app-container flex flex-col overflow-hidden theme-border">
         
         <!-- Header and Navigation -->
-        <header class="flex items-center justify-between p-4 bg-gray-900/50 border-b border-gray-700 flex-shrink-0">
+        <header class="flex items-center justify-between p-4 theme-card border-b theme-border-secondary flex-shrink-0">
             <div class="flex items-center space-x-3">
                 <i class="fas fa-brain text-blue-400 text-2xl"></i>
-                <h1 class="text-xl font-bold text-white">My Focus</h1>
+                <h1 class="text-xl font-bold theme-text-primary">My Focus</h1>
             </div>
-            <nav id="tabs" class="flex space-x-1 bg-gray-700/80 p-1 rounded-lg">
+            <nav id="tabs" class="flex space-x-1 theme-card p-1 rounded-lg">
                 <button data-target="dashboard" class="tab-button tab-active px-3 py-1.5 text-sm font-semibold rounded-md transition-colors duration-200 flex items-center space-x-2">
                     <i class="fas fa-tachometer-alt"></i>
                     <span>仪表盘</span>
@@ -122,24 +122,6 @@
                             </div>
                         </div>
 
-                        <!-- Today's Focus Timeline -->
-                        <div class="bg-gray-700/50 p-6 rounded-xl shadow-lg">
-                            <h3 class="font-semibold text-white mb-4">今日专注时间轴 (最近3小时)</h3>
-                            <div class="w-full bg-gray-800 rounded-full h-10 flex overflow-hidden">
-                                <div class="bg-green-500 h-full" style="width: 25%" title="09:00 - 09:45 (专注)"></div>
-                                <div class="bg-yellow-500 h-full" style="width: 5%" title="09:45 - 09:54 (分心)"></div>
-                                <div class="bg-green-500 h-full" style="width: 30%" title="09:54 - 10:48 (专注)"></div>
-                                <div class="bg-red-500 h-full" style="width: 8%" title="10:48 - 11:02 (严重分心)"></div>
-                                <div class="bg-green-500 h-full" style="width: 20%" title="11:02 - 11:38 (专注)"></div>
-                                <div class="bg-gray-600 h-full" style="width: 12%" title="11:38 - 现在 (休息)"></div>
-                            </div>
-                            <div class="flex justify-between text-xs text-gray-400 mt-2">
-                                <span>3小时前</span>
-                                <span>2小时前</span>
-                                <span>1小时前</span>
-                                <span>现在</span>
-                            </div>
-                        </div>
                     </div>
 
                     <!-- Right Column: Stats & Live Data -->
@@ -717,6 +699,20 @@
                          <h3 class="text-lg font-semibold text-white mb-4 border-b border-gray-600 pb-2"><i class="fas fa-sliders-h mr-2 text-blue-400"></i>通用设置</h3>
                         <div class="space-y-4">
                             <div class="flex items-center justify-between">
+                                <div class="flex flex-col">
+                                    <span class="text-gray-300">界面主题</span>
+                                    <span class="text-xs text-gray-500">切换浅色/深色主题模式</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-xs text-gray-400">浅色</span>
+                                    <label for="theme-toggle" class="inline-flex relative items-center cursor-pointer">
+                                        <input type="checkbox" value="" id="theme-toggle" class="sr-only peer" checked>
+                                        <div class="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-purple-600"></div>
+                                    </label>
+                                    <span class="text-xs text-gray-400">深色</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center justify-between">
                                 <span class="text-gray-300">开机自启动</span>
                                 <label for="autostart" class="inline-flex relative items-center cursor-pointer"><input type="checkbox" value="" id="autostart" class="sr-only peer" checked><div class="w-11 h-6 bg-gray-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div></label>
                             </div>
@@ -728,7 +724,7 @@
                     </div>
 
                     <div class="flex justify-end pt-4">
-                        <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition-transform duration-200 hover:scale-105 flex items-center space-x-2"><i class="fas fa-save"></i><span>保存设置</span></button>
+                        <button id="save-settings-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition-transform duration-200 hover:scale-105 flex items-center space-x-2"><i class="fas fa-save"></i><span>保存设置</span></button>
                     </div>
 
                 </div>
