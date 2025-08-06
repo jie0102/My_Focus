@@ -582,16 +582,22 @@ function initSettings() {
     // 初始化主题切换功能
     initThemeToggle();
 
-    function saveSettings() {
+    async function saveSettings() {
         const settings = {
+            user_id: "default_user",
+            username: "用户",
             theme: getCurrentTheme(),
             whitelist: getWhitelistItems(),
             blacklist: getBlacklistItems(),
             autostart: document.getElementById('autostart')?.checked || false,
             fatigue_notify: document.getElementById('fatigue-notify')?.checked || false,
-            focus_duration: 25,
-            short_break: 5,
-            long_break: 15,
+            default_focus_duration: 25,
+            short_break_duration: 5,
+            long_break_duration: 15,
+            notification_enabled: true,
+            sound_enabled: true,
+            auto_start_break: false,
+            auto_start_focus: false,
             
             // 分心干预设置
             distraction_intervention: {
@@ -607,67 +613,16 @@ function initSettings() {
         };
 
         // 保存用户设置到后端
-        saveUserSettingsToBackend(settings);
+        await saveUserSettingsToBackend(settings);
         
-        // 注意：不再自动保存AI配置，需要用户点击"保存设置"按钮
+        // 自动保存AI配置到后端
+        const aiConfig = getCurrentAIConfig();
+        await TauriAPI.saveAIConfig(aiConfig);
         
-        // 显示保存成功提示（但提醒用户还需保存AI配置）
-        showNotification('用户设置已保存', '用户偏好设置已保存，如有AI配置更改请点击"保存设置"按钮', 'success', false);
+        // 显示保存成功提示
+        showNotification('设置已保存', '用户设置和AI配置均已自动保存', 'success', false);
     }
 
-/**
- * 处理保存设置按钮点击事件
- */
-async function handleSaveSettings() {
-    const saveBtn = document.getElementById('save-settings-btn');
-    if (!saveBtn) return;
-    
-    // 更新按钮状态
-    const originalText = saveBtn.innerHTML;
-    saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>正在保存...';
-    saveBtn.disabled = true;
-    
-    try {
-        // 保存所有设置
-        await saveAllSettings();
-        
-        // 保存AI配置
-        await saveAIConfig();
-        
-        // 成功提示
-        saveBtn.innerHTML = '<i class="fas fa-check mr-2"></i>保存成功';
-        saveBtn.classList.remove('bg-blue-600', 'hover:bg-blue-700');
-        saveBtn.classList.add('bg-green-600', 'hover:bg-green-700');
-        
-        showNotification('设置已保存', '所有设置已成功保存到本地', 'success', false);
-        
-        // 2秒后恢复按钮状态
-        setTimeout(() => {
-            saveBtn.innerHTML = originalText;
-            saveBtn.disabled = false;
-            saveBtn.classList.remove('bg-green-600', 'hover:bg-green-700');
-            saveBtn.classList.add('bg-blue-600', 'hover:bg-blue-700');
-        }, 2000);
-        
-    } catch (error) {
-        console.error('保存设置失败:', error);
-        
-        // 错误提示
-        saveBtn.innerHTML = '<i class="fas fa-exclamation-triangle mr-2"></i>保存失败';
-        saveBtn.classList.remove('bg-blue-600', 'hover:bg-blue-700');
-        saveBtn.classList.add('bg-red-600', 'hover:bg-red-700');
-        
-        showNotification('保存失败', `设置保存失败: ${error.message || error}`, 'error', false);
-        
-        // 3秒后恢复按钮状态
-        setTimeout(() => {
-            saveBtn.innerHTML = originalText;
-            saveBtn.disabled = false;
-            saveBtn.classList.remove('bg-red-600', 'hover:bg-red-700');
-            saveBtn.classList.add('bg-blue-600', 'hover:bg-blue-700');
-        }, 3000);
-    }
-}
 
     /**
      * 保存用户设置到后端
@@ -1330,12 +1285,9 @@ function initAIModelSettings() {
         apiTypeSelect.addEventListener('change', onAPITypeChanged);
     }
     
-    // 移除自动保存，改为手动保存机制
-    // 添加保存设置按钮事件处理器
-    const saveSettingsBtn = document.getElementById('save-settings-btn');
-    if (saveSettingsBtn) {
-        saveSettingsBtn.addEventListener('click', handleSaveSettings);
-    }
+    // 恢复自动保存机制
+    // 添加AI设置自动保存事件监听器
+    initAISettingsAutoSave();
     
     // 加载AI配置
     loadAIConfig();
@@ -1360,7 +1312,10 @@ function onAPITypeChanged() {
         clearAPITestResults();
         
         console.log(`API类型已切换到: ${selectedType}, URL已更新为: ${defaultUrls[selectedType]}`);
-        showNotification('API类型已更新', `URL已自动设置为 ${selectedType} 的默认地址，请点击"保存设置"以保存配置`, 'info', false);
+        showNotification('API类型已更新', `URL已自动设置为 ${selectedType} 的默认地址，配置将自动保存`, 'info', false);
+        
+        // 自动保存配置
+        autoSaveAIConfig();
     }
 }
 
@@ -1446,8 +1401,9 @@ async function testAPIConnection() {
         // 如果测试成功，加载模型列表并自动保存配置
         if (result.success) {
             await loadAvailableModels();
-            // 提示用户保存配置
-            showNotification('API测试成功', '请点击"保存设置"按钮保存配置', 'success', false);
+            // 自动保存配置
+            await autoSaveAIConfig();
+            showNotification('API测试成功', '配置已自动保存', 'success', false);
         }
         
     } catch (error) {
@@ -1603,6 +1559,32 @@ function getCurrentAIConfig() {
         detection_model: document.getElementById('detection-model')?.value || '',
         report_model: document.getElementById('report-model')?.value || ''
     };
+}
+
+/**
+ * 初始化AI设置的自动保存
+ */
+function initAISettingsAutoSave() {
+    const aiInputs = [
+        'api-type',
+        'api-url', 
+        'api-key',
+        'detection-model',
+        'report-model'
+    ];
+    
+    aiInputs.forEach(inputId => {
+        const element = document.getElementById(inputId);
+        if (element) {
+            if (element.type === 'password' || element.type === 'text' || element.type === 'url') {
+                // 对于输入框，使用 blur 事件避免过于频繁的保存
+                element.addEventListener('blur', autoSaveAIConfig);
+            } else if (element.tagName === 'SELECT') {
+                // 对于选择框，使用 change 事件立即保存
+                element.addEventListener('change', autoSaveAIConfig);
+            }
+        }
+    });
 }
 
 /**
